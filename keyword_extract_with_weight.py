@@ -27,7 +27,7 @@ else:
     text = textract.process('http://bit.ly/epo_keyword_extraction_document', method='tesseract', language='eng')
 
 
-text = text.encode('ascii','ignore').lower()
+text = text.lower()
 keywords = re.findall(r'[a-zA-Z]\w+',text)
 
 df = pd.DataFrame(list(set(keywords)),columns=['keywords'])
@@ -50,4 +50,5 @@ df['idf'] = df['keywords'].apply(lambda x: weightage(x,text)[2])
 df['tf_idf'] = df['keywords'].apply(lambda x: weightage(x,text)[3])
 
 df = df.sort_values('tf_idf',ascending=True)
-df.head(25)     
+df.head(25) 
+ 
